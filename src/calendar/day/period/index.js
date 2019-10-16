@@ -63,7 +63,11 @@ class Day extends Component {
     if (!marking) {
       return resultStyle;
     }
-    if (marking.imageColor) {
+    if (this.props.state === 'disabled') {
+      resultStyle.push({
+        tintColor: this.theme.textDisabledColor
+      });
+    } else if (marking.imageColor) {
       resultStyle.push({
         tintColor: marking.imageColor
       });
