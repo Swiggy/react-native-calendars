@@ -1,18 +1,19 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   TouchableWithoutFeedback,
   Text,
-  View} from 'react-native';
-import {shouldUpdate} from '../../../component-updater';
+  View
+} from 'react-native';
+import { shouldUpdate } from '../../../component-updater';
 
 import * as defaultStyle from '../../../style';
 import styleConstructor from './style';
 
 class Day extends Component {
   static displayName = 'IGNORE';
-  
+
   static propTypes = {
     // TODO: selected + disabled props should be removed
     state: PropTypes.oneOf(['selected', 'disabled', 'today', '']),
@@ -30,7 +31,7 @@ class Day extends Component {
 
   constructor(props) {
     super(props);
-    this.theme = {...defaultStyle, ...(props.theme || {})};
+    this.theme = { ...defaultStyle, ...(props.theme || {}) };
     this.style = styleConstructor(props.theme);
     this.markingStyle = this.getDrawingStyle(props.marking || []);
     this.onDayPress = this.onDayPress.bind(this);
@@ -57,7 +58,7 @@ class Day extends Component {
   }
 
   getDrawingStyle(marking) {
-    const defaultStyle = {textStyle: {}};
+    const defaultStyle = { textStyle: {} };
     if (!marking) {
       return defaultStyle;
     }
@@ -116,6 +117,7 @@ class Day extends Component {
   render() {
     const containerStyle = [this.style.base];
     const textStyle = [this.style.text];
+    const imageStyle = [this.style.image];
     let leftFillerStyle = {};
     let rightFillerStyle = {};
     let fillerStyle = {};
@@ -157,6 +159,9 @@ class Day extends Component {
         containerStyle.push({
           backgroundColor: flags.startingDay.color
         });
+        imageStyle.push({
+          tintColor: "white"
+        })
       } else if (flags.endingDay && !flags.startingDay) {
         rightFillerStyle = {
           backgroundColor: this.theme.calendarBackground
@@ -167,11 +172,14 @@ class Day extends Component {
         containerStyle.push({
           backgroundColor: flags.endingDay.color
         });
+        imageStyle.push({
+          tintColor: "white"
+        })
       } else if (flags.day) {
-        leftFillerStyle = {backgroundColor: flags.day.color};
-        rightFillerStyle = {backgroundColor: flags.day.color};
+        leftFillerStyle = { backgroundColor: flags.day.color };
+        rightFillerStyle = { backgroundColor: flags.day.color };
         // #177 bug
-        fillerStyle = {backgroundColor: flags.day.color};
+        fillerStyle = { backgroundColor: flags.day.color };
       } else if (flags.endingDay && flags.startingDay) {
         rightFillerStyle = {
           backgroundColor: this.theme.calendarBackground
@@ -182,12 +190,20 @@ class Day extends Component {
         containerStyle.push({
           backgroundColor: flags.endingDay.color
         });
+        imageStyle.push({
+          tintColor: "white"
+        })
       }
+      containerStyle.push({
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+      })
 
       fillers = (
         <View style={[this.style.fillers, fillerStyle]}>
-          <View style={[this.style.leftFiller, leftFillerStyle]}/>
-          <View style={[this.style.rightFiller, rightFillerStyle]}/>
+          <View style={[this.style.leftFiller, leftFillerStyle]} />
+          <View style={[this.style.rightFiller, rightFillerStyle]} />
         </View>
       );
     }
@@ -201,6 +217,7 @@ class Day extends Component {
           {fillers}
           <View style={containerStyle}>
             <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+            <Image style={imageStyle} source={{ uri: "mask" }} />
           </View>
         </View>
       </TouchableWithoutFeedback>

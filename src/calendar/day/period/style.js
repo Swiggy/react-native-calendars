@@ -35,12 +35,15 @@ export default function styleConstructor(theme={}) {
       flex: 1
     },
     text: {
-      marginTop: 7,
       fontSize: appStyle.textDayFontSize,
       fontFamily: appStyle.textDayFontFamily,
       fontWeight: appStyle.textDayFontWeight,
       color: appStyle.dayTextColor || '#2d4150',
       backgroundColor: 'rgba(255, 255, 255, 0)'
+    },
+    image: {
+      width: 10,
+      height: 10,
     },
     today: {
       backgroundColor: appStyle.todayBackgroundColor
