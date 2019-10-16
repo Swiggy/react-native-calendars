@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import {
   TouchableWithoutFeedback,
   Text,
-  View
+  View,
+  Image,
 } from 'react-native';
 import { shouldUpdate } from '../../../component-updater';
 
@@ -55,6 +56,20 @@ class Day extends Component {
     }
 
     return shouldUpdate(this.props, nextProps, ['state', 'children', 'onPress', 'onLongPress']);
+  }
+
+  getImageStyle(marking) {
+    const resultStyle = [this.style.image];
+    if (!marking) {
+      return resultStyle;
+    }
+    if (marking.imageColor) {
+      resultStyle.push({
+        tintColor: marking.imageColor
+      });
+    }
+    return resultStyle;
+
   }
 
   getDrawingStyle(marking) {
@@ -117,7 +132,7 @@ class Day extends Component {
   render() {
     const containerStyle = [this.style.base];
     const textStyle = [this.style.text];
-    const imageStyle = [this.style.image];
+    const imageStyle = this.getImageStyle(this.props.marking);
     let leftFillerStyle = {};
     let rightFillerStyle = {};
     let fillerStyle = {};
@@ -217,7 +232,12 @@ class Day extends Component {
           {fillers}
           <View style={containerStyle}>
             <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
-            <Image style={imageStyle} source={{ uri: "mask" }} />
+            {
+              this.props.marking.imageName
+                ? <Image style={imageStyle} source={{ uri: this.props.marking.imageName }} />
+                : null
+            }
+
           </View>
         </View>
       </TouchableWithoutFeedback>
