@@ -55,7 +55,7 @@ class Day extends Component {
       return true;
     }
 
-    return shouldUpdate(this.props, nextProps, ['state', 'children', 'onPress', 'onLongPress']);
+    return shouldUpdate(this.props, nextProps, ['state', 'children', 'onPress', 'onLongPress', 'marking']);
   }
 
   getImageStyle(marking) {
