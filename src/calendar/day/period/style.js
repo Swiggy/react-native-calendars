@@ -43,7 +43,7 @@ export default function styleConstructor(theme={}) {
     },
     image: {
       width: 10,
-      height: 10,
+      height: 15,
     },
     today: {
       backgroundColor: appStyle.todayBackgroundColor
